@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lojão Preço Caído! — achadinhos com preço que despencou</title>
+<meta name="description" content="Achadinhos do Mercado Livre e da Shopee com preço que despencou. Ofertas selecionadas pelo canal Lojão Preço Caído!">
+<meta name="theme-color" content="#E8400C">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lojão Preço Caído!">
+<meta property="og:description" content="Achadinhos com preço que despencou">
+<meta property="og:image" content="./assets/logo_horizontal.png">
+<link rel="icon" type="image/png" href="./assets/icon.png">
+<link rel="apple-touch-icon" href="./assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://http2.mlstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112..125,800..900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<header class="top wrap">
+  <div class="top-row">
+    <a href="./" class="brand" aria-label="Lojão Preço Caído! — início">
+      <img src="./assets/icon.png" alt="" width="44" height="44">
+      <span class="wm"><span>lojão</span><span class="wm-o">preço caído!</span></span>
+    </a>
+    <p class="updated" id="updated" aria-live="polite"></p>
+  </div>
+  <h1 class="claim">achadinhos com preço que <span class="fall" aria-label="despencou"><i>d</i><i>e</i><i>s</i><i>p</i><i>e</i><i>n</i><i>c</i><i>o</i><i>u</i></span></h1>
+  <p class="stats" id="stats"></p>
+</header>
+
+<div class="bar" id="bar">
+  <div class="wrap">
+    <label class="search">
+      <span class="sr">Buscar oferta</span>
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <input id="q" type="search" placeholder="Buscar: fone, air fryer, tênis…" autocomplete="off" enterkeyhint="search">
+    </label>
+    <nav class="chips" id="chips" aria-label="Categorias"></nav>
+  </div>
+</div>
+
+<main class="wrap">
+  <section class="hot" id="hot" aria-labelledby="hot-t" hidden>
+    <h2 class="sec" id="hot-t">🔥 maiores quedas</h2>
+    <div class="rail" id="rail"></div>
+  </section>
+
+  <section aria-labelledby="all-t">
+    <div class="sec-row">
+      <h2 class="sec" id="all-t">todas as ofertas <span class="count" id="count"></span></h2>
+      <div class="controls">
+        <div class="seg" role="radiogroup" aria-label="Loja" id="seg">
+          <button type="button" role="radio" data-loja="">Todas</button>
+          <button type="button" role="radio" data-loja="ml">Mercado Livre</button>
+          <button type="button" role="radio" data-loja="shopee">Shopee</button>
+        </div>
+        <label class="sort"><span class="sr">Ordenar por</span>
+          <select id="sort">
+            <option value="desconto">Maior desconto</option>
+            <option value="preco">Menor preço</option>
+            <option value="recentes">Mais recentes</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <div class="grid" id="grid" aria-live="polite"></div>
+    <div class="empty" id="empty" hidden>
+      <p class="empty-t">Nada por aqui</p>
+      <p>Tenta outra busca ou outra categoria.</p>
+      <button type="button" class="btn ghost" id="reset">Ver todas as ofertas</button>
+    </div>
+    <div class="more"><button type="button" class="btn" id="more" hidden>Ver mais ofertas</button></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <img src="./assets/logo_horizontal_transparente_branco.png" alt="Lojão Preço Caído!" width="200" height="58" loading="lazy">
+    <p>Podemos receber comissão pelas compras feitas pelos links, sem custo extra pra você. Preços e disponibilidade podem mudar.</p>
+    <ul class="social">
+      <li><a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.6.5-4.8.5-4.8s0-3.2-.5-4.8zM9.7 15.1V8.9l5.8 3.1z"/></svg></a></li>
+      <li><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg></a></li>
+      <li><a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M16.6 2h-3.4v13.2a2.9 2.9 0 1 1-2.1-2.8V9a6.3 6.3 0 1 0 5.5 6.2V8.6a7.6 7.6 0 0 0 4.4 1.4V6.6a4.4 4.4 0 0 1-4.4-4.6z"/></svg></a></li>
+    </ul>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="./app.js" defer></script>
+</body>
+</html>

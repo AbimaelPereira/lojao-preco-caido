@@ -1,0 +1,202 @@
+[
+  {
+    "id": 1,
+    "name": "Celulares e Smartphones"
+  },
+  {
+    "id": 2,
+    "name": "Acessórios para Celular"
+  },
+  {
+    "id": 3,
+    "name": "Informática"
+  },
+  {
+    "id": 4,
+    "name": "Notebooks"
+  },
+  {
+    "id": 5,
+    "name": "Games"
+  },
+  {
+    "id": 6,
+    "name": "Eletrônicos"
+  },
+  {
+    "id": 7,
+    "name": "TV e Vídeo"
+  },
+  {
+    "id": 8,
+    "name": "Áudio e Fones"
+  },
+  {
+    "id": 9,
+    "name": "Câmeras e Fotografia"
+  },
+  {
+    "id": 10,
+    "name": "Smartwatches"
+  },
+  {
+    "id": 11,
+    "name": "Eletrodomésticos"
+  },
+  {
+    "id": 12,
+    "name": "Eletroportáteis"
+  },
+  {
+    "id": 13,
+    "name": "Cozinha"
+  },
+  {
+    "id": 14,
+    "name": "Casa e Decoração"
+  },
+  {
+    "id": 15,
+    "name": "Móveis"
+  },
+  {
+    "id": 16,
+    "name": "Cama, Mesa e Banho"
+  },
+  {
+    "id": 17,
+    "name": "Iluminação"
+  },
+  {
+    "id": 18,
+    "name": "Organização"
+  },
+  {
+    "id": 19,
+    "name": "Limpeza"
+  },
+  {
+    "id": 20,
+    "name": "Jardim e Área Externa"
+  },
+  {
+    "id": 21,
+    "name": "Ferramentas"
+  },
+  {
+    "id": 22,
+    "name": "Construção e Reforma"
+  },
+  {
+    "id": 23,
+    "name": "Automotivo"
+  },
+  {
+    "id": 24,
+    "name": "Motos"
+  },
+  {
+    "id": 25,
+    "name": "Moda Feminina"
+  },
+  {
+    "id": 26,
+    "name": "Moda Masculina"
+  },
+  {
+    "id": 27,
+    "name": "Calçados"
+  },
+  {
+    "id": 28,
+    "name": "Bolsas e Mochilas"
+  },
+  {
+    "id": 29,
+    "name": "Joias e Bijuterias"
+  },
+  {
+    "id": 30,
+    "name": "Relógios"
+  },
+  {
+    "id": 31,
+    "name": "Beleza"
+  },
+  {
+    "id": 32,
+    "name": "Perfumes"
+  },
+  {
+    "id": 33,
+    "name": "Cuidados com a Pele"
+  },
+  {
+    "id": 34,
+    "name": "Cabelo"
+  },
+  {
+    "id": 35,
+    "name": "Saúde"
+  },
+  {
+    "id": 36,
+    "name": "Suplementos"
+  },
+  {
+    "id": 37,
+    "name": "Esportes e Fitness"
+  },
+  {
+    "id": 38,
+    "name": "Ciclismo"
+  },
+  {
+    "id": 39,
+    "name": "Camping e Pesca"
+  },
+  {
+    "id": 40,
+    "name": "Bebês"
+  },
+  {
+    "id": 41,
+    "name": "Brinquedos"
+  },
+  {
+    "id": 42,
+    "name": "Pet Shop"
+  },
+  {
+    "id": 43,
+    "name": "Livros"
+  },
+  {
+    "id": 44,
+    "name": "Papelaria e Escritório"
+  },
+  {
+    "id": 45,
+    "name": "Festas"
+  },
+  {
+    "id": 46,
+    "name": "Instrumentos Musicais"
+  },
+  {
+    "id": 47,
+    "name": "Mercado e Bebidas"
+  },
+  {
+    "id": 48,
+    "name": "Viagem"
+  },
+  {
+    "id": 49,
+    "name": "Presentes"
+  },
+  {
+    "id": 50,
+    "name": "Ofertas Relâmpago"
+  }
+]

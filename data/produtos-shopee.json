@@ -1,0 +1,16 @@
+[
+  {
+    "id": "shopee-TESTE0001",
+    "loja": "shopee",
+    "categoria_id": 13,
+    "titulo": "[TESTE] Kit 5 Potes Herméticos de Vidro com Tampa",
+    "img": "https://placehold.co/600x600/F4F1EC/E8400C?text=Shopee+Teste",
+    "link": "https://shopee.com.br/",
+    "preco": 59.9,
+    "preco_pix": null,
+    "preco_antigo": 99.9,
+    "desconto": 40,
+    "cupom": "LOJAO10",
+    "atualizado": 1793993848
+  }
+]
