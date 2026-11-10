@@ -4,19 +4,87 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Redirecionando…</title>
+<meta name="theme-color" content="#F4F1EC">
+<title>Indo para a oferta… | Lojão Preço Caído</title>
+<link rel="icon" href="./assets/icon.png">
+<link rel="preload" href="./data/produtos-ml.json" as="fetch" crossorigin>
+<link rel="preload" href="./data/produtos-shopee.json" as="fetch" crossorigin>
+<style>
+  :root{--laranja:#E8400C;--preto:#141414;--creme:#F4F1EC;--branco:#fff;--cinza:#5A5A5A;--cinza-claro:#E4DFD7}
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--creme);color:var(--preto);font:400 15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+  main{width:100%;max-width:380px;text-align:center}
+  .logo{display:block;height:44px;width:auto;max-width:80%;margin:0 auto 22px}
+  .card{background:var(--branco);border:1px solid var(--cinza-claro);border-radius:18px;padding:16px;box-shadow:0 10px 30px -18px rgba(0,0,0,.25)}
+  .img{aspect-ratio:1;width:100%;max-width:220px;margin:0 auto 14px;border-radius:12px;background:var(--creme);overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .img img{width:100%;height:100%;object-fit:contain}
+  .title{margin:0 0 6px;font-weight:600;font-size:15px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:1.35em}
+  .price{margin:0;font-weight:800;font-size:22px;color:var(--laranja)}
+  .price s{font-weight:400;font-size:13px;color:var(--cinza);margin-right:6px}
+  .status{margin:18px 0 12px;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--cinza);font-size:14px}
+  .spin{width:18px;height:18px;border:2.5px solid var(--cinza-claro);border-top-color:var(--laranja);border-radius:50%;animation:s .8s linear infinite}
+  @keyframes s{to{transform:rotate(360deg)}}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;width:100%;padding:0 20px;border-radius:999px;background:var(--laranja);color:#fff;font-weight:700;text-decoration:none}
+  .btn:hover{background:#C9370A}
+  .sk{background:linear-gradient(90deg,var(--cinza-claro) 25%,#EEE9E1 50%,var(--cinza-claro) 75%);background-size:200% 100%;animation:sh 1.2s infinite;border-radius:6px}
+  @keyframes sh{to{background-position:-200% 0}}
+  .title.sk{height:1.35em;width:80%;margin:0 auto 8px}
+  .price.sk{height:24px;width:40%;margin:0 auto}
+  [hidden]{display:none!important}
+  @media (prefers-reduced-motion:reduce){.spin,.sk{animation:none}}
+  @media (max-height:560px){.img{max-width:140px}.logo{height:34px;margin-bottom:14px}}
+</style>
 </head>
 <body>
-<p>Redirecionando para a oferta…</p>
+<main>
+  <img class="logo" src="./assets/logo_horizontal.png" alt="Lojão Preço Caído">
+  <div class="card">
+    <div class="img" id="img"></div>
+    <p class="title sk" id="title"></p>
+    <p class="price sk" id="price"></p>
+  </div>
+  <div class="status" id="status"><span class="spin" aria-hidden="true"></span><span id="msg">Levando você para a oferta…</span></div>
+  <a class="btn" id="btn" href="./" hidden>Ir para a oferta</a>
+</main>
 <script>
 (function () {
   var id = new URLSearchParams(location.search).get('id');
   var home = './';
-  if (!id) return location.replace(home);
-  var get = function (u) { return fetch(u, { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : []; }).catch(function () { return []; }); };
+  var go = function (u) { location.replace(u); };
+  if (!id) return go(home);
+
+  var $ = function (s) { return document.getElementById(s); };
+  var brl = function (v) { try { return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); } catch (e) { return 'R$ ' + v; } };
+  var get = function (u) { return fetch(u).then(function (r) { return r.ok ? r.json() : []; }).catch(function () { return []; }); };
+
+  // fallback: se algo travar, ao menos manda para a home
+  var guard = setTimeout(function () { go(home); }, 8000);
+
   Promise.all([get('./data/produtos-ml.json'), get('./data/produtos-shopee.json')]).then(function (r) {
-    var p = [].concat(r[0], r[1]).find(function (x) { return x && x.id === id; });
-    location.replace(p && p.link ? p.link : home);
+    clearTimeout(guard);
+    var p = [].concat(r[0] || [], r[1] || []).find(function (x) { return x && x.id === id; });
+    if (!p || !p.link) return go(home);
+
+    // redireciona primeiro; o visual é só enquanto a loja carrega
+    setTimeout(function () { go(p.link); }, 600);
+
+    try {
+      var btn = $('btn'); btn.href = p.link; btn.hidden = false;
+      $('msg').textContent = 'Indo para ' + (p.loja === 'ml' ? 'o Mercado Livre' : p.loja === 'shopee' ? 'a Shopee' : 'a loja') + '…';
+      var t = $('title'); t.classList.remove('sk'); t.textContent = p.titulo || '';
+      var preco = p.preco_pix != null ? p.preco_pix : p.preco;
+      var pr = $('price'); pr.classList.remove('sk');
+      if (typeof preco === 'number') {
+        pr.innerHTML = (p.preco_antigo ? '<s></s>' : '') + '<span></span>';
+        if (p.preco_antigo) pr.querySelector('s').textContent = brl(p.preco_antigo);
+        pr.querySelector('span').textContent = brl(preco) + (p.preco_pix != null ? ' no Pix' : '');
+      } else pr.hidden = true;
+      if (p.img) {
+        var im = new Image(); im.alt = ''; im.referrerPolicy = 'no-referrer'; im.decoding = 'async';
+        im.src = p.img; $('img').appendChild(im);
+      } else $('img').hidden = true;
+    } catch (e) {}
   });
 })();
 </script>
