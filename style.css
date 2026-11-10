@@ -136,3 +136,16 @@ body{overflow-x:clip}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* rodapé: links legais */
+.legal{margin:16px 0 0;font-size:13px}
+.legal a{color:#fff;font-weight:600}
+
+/* página de privacidade */
+.doc{max-width:760px;padding-top:10px;padding-bottom:40px}
+.doc h1{font:900 clamp(28px,7vw,42px)/1 var(--display);font-stretch:120%;letter-spacing:-.04em;margin:18px 0 8px}
+.doc h2{font:900 20px/1.15 var(--display);font-stretch:115%;letter-spacing:-.02em;margin:28px 0 8px;color:var(--laranja-txt)}
+.doc p,.doc li{font-size:15px;line-height:1.6}
+.doc ul{padding-left:20px}
+.doc .meta{color:var(--cinza);font-size:13px;margin:0}
+.doc a{color:var(--laranja-txt);font-weight:600}
