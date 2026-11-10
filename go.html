@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Redirecionando…</title>
+</head>
+<body>
+<p>Redirecionando para a oferta…</p>
+<script>
+(function () {
+  var id = new URLSearchParams(location.search).get('id');
+  var home = './';
+  if (!id) return location.replace(home);
+  var get = function (u) { return fetch(u, { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : []; }).catch(function () { return []; }); };
+  Promise.all([get('./data/produtos-ml.json'), get('./data/produtos-shopee.json')]).then(function (r) {
+    var p = [].concat(r[0], r[1]).find(function (x) { return x && x.id === id; });
+    location.replace(p && p.link ? p.link : home);
+  });
+})();
+</script>
+</body>
+</html>
