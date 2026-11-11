@@ -9,12 +9,11 @@
   const LOJAS = { ml: 'Mercado Livre', shopee: 'Shopee' };
   const ARROW = '<svg aria-hidden="true" width="10" height="12" viewBox="0 0 10 12"><path d="M5 1v9M1.5 6.5L5 10l3.5-3.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
-  const el = { grid: $('#grid'), rail: $('#rail'), hot: $('#hot'), chips: $('#chips'), q: $('#q'), seg: $('#seg'), sort: $('#sort'), more: $('#more'), empty: $('#empty'), count: $('#count'), updated: $('#updated'), toast: $('#toast'), bar: $('#bar') };
+  const el = { grid: $('#grid'), rail: $('#rail'), hot: $('#hot'), chips: $('#chips'), q: $('#q'), sort: $('#sort'), more: $('#more'), empty: $('#empty'), count: $('#count'), updated: $('#updated'), toast: $('#toast'), bar: $('#bar') };
 
   const p = new URLSearchParams(location.search);
-  const state = { cat: p.get('cat') || '', q: p.get('q') || '', loja: p.get('loja') || '', sort: p.get('sort') || 'desconto', shown: PAGE };
+  const state = { cat: p.get('cat') || '', q: p.get('q') || '', sort: p.get('sort') || 'desconto', shown: PAGE };
   if (!['desconto', 'preco', 'recentes'].includes(state.sort)) state.sort = 'desconto';
-  if (!LOJAS[state.loja]) state.loja = '';
   let all = [], cats = [];
 
   const getJSON = (url) => fetch(url, { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }).then((d) => (Array.isArray(d) ? d : [])).catch(() => []);
@@ -48,7 +47,6 @@
     const terms = norm(state.q).trim().split(/\s+/).filter(Boolean);
     const list = all.filter((x) =>
       (!state.cat || String(x.categoria_id) === state.cat) &&
-      (!state.loja || x.loja === state.loja) &&
       terms.every((t) => x._n.includes(t)));
     const s = {
       desconto: (a, b) => (b.desconto || 0) - (a.desconto || 0),
@@ -62,7 +60,6 @@
     const u = new URLSearchParams();
     if (state.cat) u.set('cat', state.cat);
     if (state.q.trim()) u.set('q', state.q.trim());
-    if (state.loja) u.set('loja', state.loja);
     if (state.sort !== 'desconto') u.set('sort', state.sort);
     const qs = u.toString();
     history.replaceState(null, '', qs ? '?' + qs : location.pathname);
@@ -85,7 +82,7 @@
 
   function renderHot() {
     const top = all.filter((x) => x.desconto).sort((a, b) => b.desconto - a.desconto).slice(0, 10);
-    el.hot.hidden = top.length === 0;
+    el.hot.dataset.has = top.length ? '1' : '';
     el.rail.innerHTML = top.map((x, i) => card(x, i < 3)).join('');
   }
 
@@ -95,7 +92,7 @@
     el.grid.innerHTML = list.slice(0, state.shown).map((x) => card(x)).join('');
     el.empty.hidden = list.length > 0;
     el.more.hidden = list.length <= state.shown;
-    el.seg.querySelectorAll('button').forEach((b) => b.setAttribute('aria-checked', b.dataset.loja === state.loja));
+    el.hot.hidden = !el.hot.dataset.has || !!state.q.trim();
     syncURL();
   }
   const update = () => { state.shown = PAGE; render(); };
@@ -116,10 +113,9 @@
   el.q.addEventListener('input', () => { clearTimeout(t); t = setTimeout(() => { state.q = el.q.value; update(); }, 150); });
   el.q.addEventListener('keydown', (e) => { if (e.key === 'Enter') el.q.blur(); });
   el.chips.addEventListener('click', (e) => { const b = e.target.closest('.chip'); if (!b) return; state.cat = b.dataset.cat; markChips(); update(); });
-  el.seg.addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; state.loja = b.dataset.loja; update(); });
   el.sort.addEventListener('change', () => { state.sort = el.sort.value; update(); });
   el.more.addEventListener('click', () => { state.shown += PAGE; render(); });
-  $('#reset').addEventListener('click', () => { Object.assign(state, { cat: '', q: '', loja: '' }); el.q.value = ''; markChips(); update(); });
+  $('#reset').addEventListener('click', () => { Object.assign(state, { cat: '', q: '' }); el.q.value = ''; markChips(); update(); });
 
   let toastT;
   const toast = (msg) => { el.toast.textContent = msg; el.toast.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => el.toast.classList.remove('on'), 1600); };
