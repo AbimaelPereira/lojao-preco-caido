@@ -32,6 +32,28 @@
   .title.sk{height:1.35em;width:80%;margin:0 auto 8px}
   .price.sk{height:24px;width:40%;margin:0 auto}
   [hidden]{display:none!important}
+  /* animações de entrada */
+  .logo{animation:cai .45s cubic-bezier(.3,1.6,.5,1) both}
+  .card{position:relative;animation:despenca .5s cubic-bezier(.2,.8,.3,1) .1s both}
+  @keyframes cai{from{opacity:0;transform:translateY(-30px) rotate(-8deg)}}
+  @keyframes despenca{0%{opacity:0;transform:translateY(-80px) rotate(-6deg) scale(.92)}55%{opacity:1;transform:translateY(8px) scale(1.03,.95)}75%{transform:translateY(-4px) scale(.99,1.02)}100%{transform:none}}
+  .badge{position:absolute;top:12px;left:12px;z-index:1;background:var(--laranja);color:#fff;border-radius:10px;padding:6px 9px;font:900 16px/1 system-ui,sans-serif;animation:pow .35s cubic-bezier(.3,1.9,.5,1) .45s both}
+  @keyframes pow{0%{transform:scale(0) rotate(-30deg)}70%{transform:scale(1.3) rotate(8deg)}100%{transform:none}}
+  .img img{animation:surge .4s ease-out .3s both}
+  @keyframes surge{from{opacity:0;transform:scale(.7) rotate(-6deg)}}
+  .price s{position:relative;color:var(--cinza);font-size:13px;margin-right:6px;text-decoration:none}
+  .price s::after{content:"";position:absolute;left:-2px;right:-2px;top:52%;height:2px;background:var(--laranja);transform-origin:0 50%;animation:risca .3s ease-out .45s both}
+  @keyframes risca{from{transform:scaleX(0)}}
+  .price span{display:inline-block;font-weight:800;font-size:20px;color:var(--laranja)}
+  .price span.bate{animation:bate .35s cubic-bezier(.3,1.8,.5,1)}
+  @keyframes bate{50%{transform:scale(1.25) translateY(3px)}}
+  .barra{height:4px;border-radius:4px;background:var(--cinza-claro);overflow:hidden;margin:0 0 12px}
+  .barra i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--laranja),#ffb200);transform-origin:0 50%;transform:scaleX(0)}
+  .barra.vai i{transition:transform var(--t,1.3s) linear;transform:none}
+  .btn{animation:pulsa 1s ease-in-out infinite}
+  @keyframes pulsa{50%{transform:scale(1.04);box-shadow:0 0 0 8px rgba(232,64,12,.15)}}
+  @media (prefers-reduced-motion:reduce){*,*::after{animation:none!important;transition:none!important}}
+
   @media (prefers-reduced-motion:reduce){.spin,.sk{animation:none}}
   @media (max-height:560px){.img{max-width:140px}.logo{height:34px;margin-bottom:14px}}
 </style>
@@ -45,6 +67,7 @@
     <p class="price sk" id="price"></p>
   </div>
   <div class="status" id="status"><span class="spin" aria-hidden="true"></span><span id="msg">Levando você para a oferta…</span></div>
+  <div class="barra" id="barra"><i></i></div>
   <a class="btn" id="btn" href="./" hidden>Ir para a oferta</a>
 </main>
 <script>
@@ -67,7 +90,9 @@
     if (!p || !p.link) return go(home);
 
     // redireciona primeiro; o visual é só enquanto a loja carrega
-    setTimeout(function () { go(p.link); }, 600);
+    var calmo = matchMedia('(prefers-reduced-motion: reduce)').matches, T = calmo ? 600 : 1300;
+    setTimeout(function () { go(p.link); }, T);
+    var ba = $('barra'); ba.style.setProperty('--t', T + 'ms'); requestAnimationFrame(function () { requestAnimationFrame(function () { ba.classList.add('vai'); }); });
 
     try {
       var btn = $('btn'); btn.href = p.link; btn.hidden = false;
@@ -78,7 +103,21 @@
       if (typeof preco === 'number') {
         pr.innerHTML = (p.preco_antigo ? '<s></s>' : '') + '<span></span>';
         if (p.preco_antigo) pr.querySelector('s').textContent = brl(p.preco_antigo);
-        pr.querySelector('span').textContent = brl(preco) + (p.preco_pix != null ? ' no Pix' : '');
+        var sp = pr.querySelector('span'), suf = p.preco_pix != null ? ' no Pix' : '';
+        sp.textContent = brl(preco) + suf;
+        if (p.preco_antigo > preco && !calmo) {
+          var b = document.createElement('span'); b.className = 'badge';
+          b.textContent = '↓-' + Math.round((1 - preco / p.preco_antigo) * 100) + '%';
+          $('img').parentNode.appendChild(b);
+          // preço despenca do antigo até o atual
+          var t0 = performance.now() + 450, de = p.preco_antigo;
+          sp.textContent = brl(de) + suf;
+          (function passo(t) {
+            var k = Math.max(0, Math.min(1, (t - t0) / 550)), e = k * k * (3 - 2 * k);
+            sp.textContent = brl(Math.round((de - (de - preco) * e) * 100) / 100) + suf;
+            if (k < 1) requestAnimationFrame(passo); else sp.classList.add('bate');
+          })(performance.now());
+        }
       } else pr.hidden = true;
       if (p.img) {
         var im = new Image(); im.alt = ''; im.referrerPolicy = 'no-referrer'; im.decoding = 'async';

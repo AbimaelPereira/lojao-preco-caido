@@ -1,0 +1,98 @@
+/* ===== animações de scroll (só com .fx; desligadas em prefers-reduced-motion) ===== */
+
+/* barra de progresso: o "preço" caindo conforme desce */
+.fx .bar::after{content:"";position:absolute;left:0;bottom:-1px;height:3px;width:calc(var(--p,0) * 100%);
+  background:linear-gradient(90deg,var(--laranja),#ffb200);border-radius:0 3px 3px 0;transition:width .08s linear}
+.fx .bar{position:sticky}
+
+/* logo gira com a velocidade do scroll */
+.fx .top .brand img{transform:rotate(calc(var(--v,0) * 1deg));transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+.fx .top .brand:hover img{animation:shake .5s}
+@keyframes shake{20%{transform:rotate(-14deg)}40%{transform:rotate(12deg)}60%{transform:rotate(-8deg)}80%{transform:rotate(4deg)}}
+
+/* "despencou" desaba de vez quando desce a página */
+.fx .fall i:nth-child(1){--k:0}.fx .fall i:nth-child(2){--k:.1}.fx .fall i:nth-child(3){--k:.2}
+.fx .fall i:nth-child(4){--k:.35}.fx .fall i:nth-child(5){--k:.5}.fx .fall i:nth-child(6){--k:.7}
+.fx .fall i:nth-child(7){--k:.9}.fx .fall i:nth-child(8){--k:1.15}.fx .fall i:nth-child(9){--k:1.45}
+.fx .fall i{transform:translateY(calc(var(--y) + var(--s,0) * var(--k) * 1.6em)) rotate(calc(var(--r) + var(--s,0) * var(--k) * 70deg));
+  opacity:calc(1 - var(--s,0) * var(--k) * .55)}
+.fx .fall:hover i{animation:jump .5s cubic-bezier(.3,1.8,.5,1) calc(var(--k) * 120ms)}
+@keyframes jump{50%{translate:0 -.35em}}
+
+/* cards: despencam do céu, quicam e assentam */
+.fx .card{animation:none}
+.fx .card:not(.in){opacity:0;transform:translateY(-70px) rotate(var(--tilt,-5deg)) scale(.92)}
+.fx .card.in{animation:despenca .375s cubic-bezier(.2,.8,.3,1) both;animation-delay:calc(var(--i,0) * 35ms)}
+@keyframes despenca{
+  0%{opacity:0;transform:translateY(-70px) rotate(var(--tilt,-5deg)) scale(.92)}
+  55%{opacity:1;transform:translateY(8px) rotate(0) scale(1.02,.96)}
+  75%{transform:translateY(-4px) scale(.99,1.02)}
+  100%{opacity:1;transform:none}}
+.fx .card.in .badge{animation:pow .275s cubic-bezier(.3,1.9,.5,1) both;animation-delay:calc(var(--i,0) * 35ms + 210ms)}
+@keyframes pow{0%{transform:scale(0) rotate(-30deg)}70%{transform:scale(1.25) rotate(6deg)}100%{transform:none}}
+.fx .card.in .badge svg{animation:quica .225s ease-in 2;animation-delay:calc(var(--i,0) * 35ms + 450ms)}
+@keyframes quica{50%{transform:translateY(3px)}}
+
+/* hover: card "pula" e a imagem balança */
+.fx .card{transition:box-shadow .2s,translate .2s cubic-bezier(.3,1.6,.5,1)}
+.fx .card.in:hover{translate:0 -6px;box-shadow:0 14px 28px -12px rgba(232,64,12,.45)}
+.fx .card:hover .card-img img{animation:balanca .3s ease-in-out}
+@keyframes balanca{25%{transform:rotate(-4deg) scale(1.04)}75%{transform:rotate(3deg) scale(1.04)}}
+
+/* grade estica levemente no scroll rápido (gelatina) */
+.fx .grid,.fx .rail{transform:skewY(calc(var(--sk,0) * 1deg));transform-origin:50% 0}
+
+/* títulos de seção entram deslizando, o 🔥 treme */
+.fx .sec:not(.in){opacity:0;transform:translateX(-24px)}
+.fx .sec.in{animation:entra .5s cubic-bezier(.2,.9,.3,1.3) both}
+@keyframes entra{from{opacity:0;transform:translateX(-24px)}}
+.fx .sec .emo{display:inline-block;animation:fogo 1.2s ease-in-out infinite;transform-origin:50% 90%}
+@keyframes fogo{0%,100%{transform:rotate(-6deg) scale(1)}50%{transform:rotate(6deg) scale(1.12)}}
+
+/* botão "ver mais" se mexe quando aparece */
+.fx #more.in{animation:chama .7s ease-in-out 2}
+@keyframes chama{20%{transform:rotate(-3deg) scale(1.05)}40%{transform:rotate(3deg) scale(1.05)}60%{transform:rotate(-2deg)}80%{transform:rotate(1deg)}}
+
+/* rodapé: ícones pulam um a um */
+.fx .social li:not(.in){opacity:0;transform:translateY(20px) scale(.6)}
+.fx .social li.in{animation:pop .5s cubic-bezier(.3,1.8,.5,1) both;animation-delay:calc(var(--i,0) * 110ms)}
+@keyframes pop{from{opacity:0;transform:translateY(20px) scale(.6)}}
+
+/* voltar ao topo: etiqueta que sobe como foguete */
+.topo{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;width:52px;height:52px;border:0;border-radius:50%;
+  background:var(--preto);color:#fff;font:900 22px/1 var(--display);cursor:pointer;box-shadow:0 8px 20px -6px rgba(0,0,0,.4);
+  transform:translateY(90px) rotate(180deg);transition:transform .45s cubic-bezier(.3,1.6,.5,1),background .2s}
+.topo.on{transform:none}
+.topo:hover{background:var(--laranja)}
+.topo.voa{animation:voa .7s cubic-bezier(.5,0,.8,.3) both}
+@keyframes voa{30%{transform:translateY(8px) scale(1.1,.85)}100%{transform:translateY(-110vh) scale(.8,1.3)}}
+
+@media (prefers-reduced-motion:reduce){.topo{transition:none}}
+
+/* ===== título do header ===== */
+.fx .claim .w{display:inline-block;animation:palavra .5s cubic-bezier(.3,1.7,.5,1) both;animation-delay:calc(var(--n) * 90ms)}
+@keyframes palavra{from{opacity:0;translate:0 .6em;rotate:-8deg;scale:.6}}
+.fx .fall i:nth-child(10){--y:.43em;--r:24deg;--k:1.8}
+/* entrada + tremidinha contínua e desregulada (duração/atraso aleatórios por letra) */
+.fx .fall i{animation:
+  chega .7s cubic-bezier(.3,1.5,.5,1) calc(450ms + var(--k) * 160ms) both,
+  treme var(--dur,2.4s) ease-in-out var(--del,2.2s) infinite alternate}
+.fx .fall i.t{animation:
+  digita .22s cubic-bezier(.3,1.8,.5,1) both,
+  treme var(--dur,2.4s) ease-in-out .22s infinite alternate}
+@keyframes chega{
+  0%{opacity:0;translate:0 -2.2em;rotate:-25deg}
+  60%{opacity:1;translate:0 .12em;rotate:6deg}
+  80%{translate:0 -.08em}
+  100%{translate:0 0;rotate:0deg}}
+@keyframes digita{from{opacity:0;translate:0 -.35em;scale:.4}}
+@keyframes treme{
+  0%{translate:0 0;rotate:0deg}
+  17%{translate:.015em -.05em;rotate:-3deg}
+  41%{translate:-.02em .03em;rotate:2.5deg}
+  58%{translate:.01em -.025em;rotate:-1deg}
+  83%{translate:-.012em .045em;rotate:3.5deg}
+  100%{translate:.008em -.01em;rotate:-2deg}}
+/* cursor de digitação */
+.fx .fall.dig::after{content:"";display:inline-block;width:.08em;height:.8em;margin-left:.04em;vertical-align:-.05em;background:currentColor;animation:pisca .8s steps(1) infinite}
+@keyframes pisca{50%{opacity:0}}
