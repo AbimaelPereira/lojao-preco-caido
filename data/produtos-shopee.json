@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "id": "shopee-58217601055",
+    "loja": "shopee",
+    "categoria_id": 21,
+    "titulo": "Parafusadeira Furadeira 1X Bateria 25V Nakasaki Sem Fio Profissional Kit Completo com Maleta",
+    "img": "https://cf.shopee.com.br/file/br-11134207-820m5-mv3iib53t4owb4",
+    "link": "https://s.shopee.com.br/2gCdUS0sOA",
+    "preco": 95.99,
+    "preco_pix": null,
+    "preco_antigo": 299.97,
+    "desconto": 68,
+    "cupom": null,
+    "nota": 4.9,
+    "vendas": 3412,
+    "comissao": 13.0,
+    "atualizado": 1794423321
+  }
+]
