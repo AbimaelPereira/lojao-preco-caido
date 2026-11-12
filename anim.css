@@ -39,8 +39,6 @@
 .fx .card:hover .card-img img{animation:balanca .3s ease-in-out}
 @keyframes balanca{25%{transform:rotate(-4deg) scale(1.04)}75%{transform:rotate(3deg) scale(1.04)}}
 
-/* grade estica levemente no scroll rápido (gelatina) */
-.fx .grid,.fx .rail{transform:skewY(calc(var(--sk,0) * 1deg));transform-origin:50% 0}
 
 /* títulos de seção entram deslizando, o 🔥 treme */
 .fx .sec:not(.in){opacity:0;transform:translateX(-24px)}
